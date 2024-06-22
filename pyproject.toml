@@ -25,6 +25,41 @@ torchvision = "^0.16.0"
 wget = "^3.2"
 scikit-image = "^0.22.0"
 
+
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "matplotlib<4.0.0,>=3.8.4",
+    "pillow<11.0.0,>=10.3.0",
+    "pytest<9.0.0,>=8.2.0",
+]
+pororo = [
+    "torch<3.0.0,>=2.1.0",
+    "torchvision<1.0.0,>=0.16.0",
+    "wget<4.0,>=3.2",
+    "scikit-image<1.0.0,>=0.22.0",
+]
+
+[tool.pdm.build]
+includes = []
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project]
+authors = [
+    {name = "Junho Yeo", email = "i@junho.io"},
+]
+requires-python = "<3.13,>=3.11"
+dependencies = [
+    "openai<2.0.0,>=1.28.1",
+    "pytesseract<1.0.0,>=0.3.10",
+    "easyocr>=1.7.1",
+    "numpy<2.0.0,>=1.26.4",
+    "pandas<3.0.0,>=2.2.2",
+    "opencv-python<5.0.0.0,>=4.9.0.80",
+]
+name = "betterocr"
+version = "1.2.0"
+description = "Better text detection by combining OCR engines with LLM."
+readme = "README.md"

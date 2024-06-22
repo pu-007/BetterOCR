@@ -17,21 +17,26 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 **BetterOCR** combines results from multiple OCR engines with an LLM to correct & reconstruct the output.
 
 ### 🔍 OCR Engines
+
 Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [Tesseract](https://github.com/tesseract-ocr/tesseract) (Google), and [Pororo](https://github.com/kakaobrain/pororo) (KakaoBrain).
 
-- For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo <br />
+**Note: It is recommended to use tesserdata-best for the Tesseract engine**
+
+- For Pororo, we're using the code from <https://github.com/black7375/korean_ocr_using_pororo> <br />
   (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with BrainOCR (Pororo's OCR module)).
 - Pororo is used only if the language options (`lang`) specified include either 🇺🇸 English (`en`) or 🇰🇷 Korean (`ko`). Also additional dependencies listed in <a href="https://github.com/junhoyeo/BetterOCR/blob/main/pyproject.toml#L22"><code>[tool.poetry.group.pororo.dependencies]</code></a> must be available. (If not, it'll automatically be excluded from enabled engines.)
 
 ### 🧠 LLM
+
 Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
 
 ### 📒 Custom Context
+
 Allows users to provide an optional context to use specific keywords such as proper nouns and product names. This assists in spelling correction and noise identification, ensuring accuracy even with rare or unconventional words.
 
 ### 🛢️ Resources
 
-- Head over to [💯 Examples](#-Examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
+- Head over to [💯 Examples](#-examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
 - Coming Soon: ~~box detection~~ 🧪✅, improved interface 🚧, async support, and more. Contributions are welcomed.
 
 > **Warning**<br/>
@@ -82,7 +87,7 @@ print(text)
 |:---:|:---:|
 | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-1.png" width="500px" /> | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/boxes-0.png" width="500px" /> |
 
-Example Script: https://github.com/junhoyeo/BetterOCR/blob/main/examples/detect_boxes.py (Uses OpenCV and Matplotlib to draw rectangles)
+Example Script: <https://github.com/junhoyeo/BetterOCR/blob/main/examples/detect_boxes.py> (Uses OpenCV and Matplotlib to draw rectangles)
 
 ```py
 import betterocr

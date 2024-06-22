@@ -38,8 +38,8 @@ def get_jobs(languages: list[str], boxes=False):
         job_easy_ocr if not boxes else job_easy_ocr_boxes,
         job_tesseract if not boxes else job_tesseract_boxes,
     ]
-    # ko or en in languages
-    if "ko" in languages or "en" in languages:
+    # pororo for ko
+    if "ko" in languages:
         try:
             if not boxes:
                 from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr
@@ -63,7 +63,11 @@ def detect_text(
     lang: list[str],
     context: str = "",
     tesseract: dict = {},
-    openai: dict = {"model": "gpt-4"},
+    ai_option: dict = {
+        "base_url": "https://api.openai.com/v1",
+        "api_key": os.environ.get("OPENAI_API_KEY"),
+    },
+    ai_client: dict = {"model": "gpt-4"},
 ):
     """Detect text from an image using EasyOCR and Tesseract, then combine and correct the results using OpenAI's LLM."""
     options = {
@@ -71,7 +75,8 @@ def detect_text(
         "lang": lang,  # ["ko", "en"]
         "context": context,
         "tesseract": tesseract,
-        "openai": openai,
+        "ai_option": ai_option,
+        "ai_client": ai_client,
     }
     jobs = get_jobs(languages=options["lang"], boxes=False)
 
@@ -106,16 +111,8 @@ def detect_text(
     print("=====")
     print(prompt)
 
-    # Prioritize user-specified API_KEY
-    api_key = options["openai"].get("API_KEY", os.environ.get("OPENAI_API_KEY"))
-
-    # Make a shallow copy of the openai options and remove the API_KEY
-    openai_options = options["openai"].copy()
-    if "API_KEY" in openai_options:
-        del openai_options["API_KEY"]
-
     client = OpenAI(
-        api_key=api_key,
+        **ai_option,
     )
 
     print("=====")
@@ -124,7 +121,7 @@ def detect_text(
         messages=[
             {"role": "user", "content": prompt},
         ],
-        **openai_options,
+        **ai_client,
     )
     output = completion.choices[0].message.content
     print("[*] LLM", output)
